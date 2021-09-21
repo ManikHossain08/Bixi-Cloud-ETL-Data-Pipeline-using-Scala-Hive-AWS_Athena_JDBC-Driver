@@ -1,5 +1,3 @@
-name := "Scala-HDFS-Hive-Athena"
-
 name := "course8project"
 
 version := "0.1"
@@ -22,7 +20,7 @@ val amazonS3 = Seq(
   "com.amazonaws" % "aws-java-sdk" % "1.0.002"
 )
 val athena = Seq(
-  "software.amazon.awssdk" % "athena" % "2.15.79"
+"software.amazon.awssdk" % "athena" % "2.15.79"
 )
 
 val simbaAthena = Seq(
@@ -38,5 +36,4 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++=hadoopDeps++ hiveDeps++ amazonS3++ athena++ simbaAthena
 resolvers += "Cloudera" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
-
 

@@ -1,2 +1,2 @@
-[debug] Created transactional ClassFileManager with tempDir = /Users/manikhossain/IdeaProjects/Scala-HDFS-Hive-Athena/project/target/scala-2.12/sbt-1.0/classes.bak
-[debug] Removing the temporary directory used for backing up class files: /Users/manikhossain/IdeaProjects/Scala-HDFS-Hive-Athena/project/target/scala-2.12/sbt-1.0/classes.bak
+[debug] Created transactional ClassFileManager with tempDir = /Users/manikhossain/Downloads/MCIT-Course8/course8project-ETL-Data-Pipeline-using-HDFS-Hive/project/target/scala-2.12/sbt-1.0/classes.bak
+[debug] Removing the temporary directory used for backing up class files: /Users/manikhossain/Downloads/MCIT-Course8/course8project-ETL-Data-Pipeline-using-HDFS-Hive/project/target/scala-2.12/sbt-1.0/classes.bak

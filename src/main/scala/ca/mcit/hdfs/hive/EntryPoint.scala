@@ -1,6 +1,6 @@
-package ca.mcit.bigdata.hive
+package ca.mcit.hdfs.hive
 
-import com.amazon.s3.athena.AthenaManager
+import ca.amazon.s3.athena.AthenaManager
 import io.circe._
 import io.circe.generic.semiauto._
 import io.circe.parser._
@@ -32,19 +32,19 @@ object EntryPoint extends App with HiveClient with HadoopClient {
       println(s"Unable to parse the json file: $error")
     case Right(json) =>
       val outFile = fileSystem.create(new Path(s"$hdfsStagingDir/stationInformation/stationInformation.csv"))
-      val bufferOutFile = new BufferedWriter(new FileWriter(new File("./data/stationInformation.csv")))
+      val bufferedOutFile = new BufferedWriter(new FileWriter(new File("./data/stationInformation.csv")))
       outFile.writeBytes(Stations.header)
-      bufferOutFile.write(Stations.header)
+      bufferedOutFile.write(Stations.header)
       json.data.stations
         .map(row => Stations.toCsv(row))
         .foreach { line =>
           outFile.writeBytes(line)
-          bufferOutFile.write(line)
+          bufferedOutFile.write(line)
         }
       outFile.close()
-      bufferOutFile.close()
+      bufferedOutFile.close()
 
-      AthenaManager.saveFileToS3Bucket(
+      AthenaManager.loadFileToS3Bucket(
         "./data/stationInformation.csv",
         "stationInformation.csv",
         "bixistation"
@@ -61,15 +61,15 @@ object EntryPoint extends App with HiveClient with HadoopClient {
       println(s"Unable to parse the json file: $error")
     case Right(json) =>
       val outFile = fileSystem.create(new Path(s"$hdfsStagingDir/systemInformation/systemInformation.csv"))
-      val bufferOutFile = new BufferedWriter(new FileWriter(new File("./data/systemInformation.csv")))
+      val bufferedOutFile = new BufferedWriter(new FileWriter(new File("./data/systemInformation.csv")))
       outFile.writeBytes(System.header)
-      bufferOutFile.write(System.header)
+      bufferedOutFile.write(System.header)
       outFile.writeBytes(System.toCsv(json.data))
-      bufferOutFile.write(System.toCsv(json.data))
+      bufferedOutFile.write(System.toCsv(json.data))
       outFile.close()
-      bufferOutFile.close()
+      bufferedOutFile.close()
 
-      AthenaManager.saveFileToS3Bucket(
+      AthenaManager.loadFileToS3Bucket(
         "./data/systemInformation.csv",
         "systemInformation.csv",
         "bixisystem"

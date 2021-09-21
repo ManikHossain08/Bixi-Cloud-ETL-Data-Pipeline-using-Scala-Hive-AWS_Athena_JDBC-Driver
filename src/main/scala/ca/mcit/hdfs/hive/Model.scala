@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.hive
+package ca.mcit.hdfs.hive
 
 case class StationInfo(data: StationList, last_updated: Int, ttl: Int)
 
@@ -70,19 +70,18 @@ object Stations {
 }
 
 object EightStationServices {
-  def getSAllServices(in: Option[List[EightStationServices]]): String = {
+  def getSAllServices(serviceList: Option[List[EightStationServices]]): String = {
     var getAllStrRows = ""
     var rowNo = 1
-    in match {
-      case Some(in) =>
-        val isLastRow = in.size
-        in.foreach { service =>
-          if (rowNo == isLastRow) getAllStrRows += toCsv(service)
+    serviceList match {
+      case Some(services) =>
+        val lastRow = services.size
+        services.foreach { service =>
+          if (rowNo == lastRow) getAllStrRows += toCsv(service)
           else getAllStrRows += toCsv(service) + "#"
           rowNo = rowNo + 1
         }
       case None => getAllStrRows += "|||||||"
-
     }
     getAllStrRows
   }

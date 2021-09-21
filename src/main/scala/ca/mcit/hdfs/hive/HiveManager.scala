@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.hive
+package ca.mcit.hdfs.hive
 
 object HiveManager extends HiveClient {
 
@@ -30,7 +30,7 @@ object HiveManager extends HiveClient {
          | 'serialization.null.format' = ''
          | )""".stripMargin)
 
-    dropExistingTable("ext_trips")
+    dropExistingTable("ext_system_information")
     stmt.executeUpdate(
       s"""CREATE EXTERNAL TABLE IF NOT EXISTS ext_system_information (
          |    email STRING,

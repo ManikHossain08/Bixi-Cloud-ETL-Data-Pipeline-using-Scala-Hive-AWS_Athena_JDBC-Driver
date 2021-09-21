@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.hive
+package ca.mcit.hdfs.hive
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}

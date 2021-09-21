@@ -1,15 +1,14 @@
-package com.amazon.s3.athena
+package ca.amazon.s3.athena
 
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.s3.AmazonS3Client
-
 import java.io.File
 import java.sql.DriverManager
 import java.util.Properties
 
 object AthenaManager {
 
-  def saveFileToS3Bucket(localFilePath: String, fileName: String, s3BucketName: String): Unit = {
+  def loadFileToS3Bucket(localFilePath: String, fileName: String, s3BucketName: String): Unit = {
     val bucketName = s3BucketName
     val AWS_ACCESS_KEY = "AKIAXEDGCGQSTCYA6AUR"
     val AWS_SECRET_KEY = "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"
@@ -36,9 +35,9 @@ object AthenaManager {
     val connection = DriverManager.getConnection(athenaUrl, athenaProperties)
     val stmt = connection.createStatement()
 
-    stmt.execute("DROP TABLE if exists sampledb.ext_station_information;")
+    stmt.execute("DROP TABLE if exists bdsf2001_manik.ext_station_information;")
     stmt.execute(
-      """CREATE TABLE IF NOT EXISTS sampledb.ext_station_information (
+      """CREATE TABLE IF NOT EXISTS bdsf2001_manik.ext_station_information (
         |         station_id STRING,
         |         lon DOUBLE,
         |         lat DOUBLE,
@@ -62,9 +61,9 @@ object AthenaManager {
         |  """.stripMargin
     )
 
-    stmt.execute("DROP TABLE if exists sampledb.ext_system_information;")
+    stmt.execute("DROP TABLE if exists bdsf2001_manik.ext_system_information;")
     stmt.execute(
-      """CREATE TABLE IF NOT EXISTS sampledb.ext_system_information (
+      """CREATE TABLE IF NOT EXISTS bdsf2001_manik.ext_system_information (
         |    email STRING,
         |    language String,
         |    license_url String,
@@ -88,9 +87,9 @@ object AthenaManager {
         | """.stripMargin
     )
 
-    stmt.execute("DROP TABLE if exists sampledb.system_information;")
+    stmt.execute("DROP TABLE if exists bdsf2001_manik.system_information;")
     stmt.execute(
-      """CREATE TABLE IF NOT EXISTS sampledb.station_information (
+      """CREATE TABLE IF NOT EXISTS bdsf2001_manik.station_information (
         |    system_id STRING,
         |    timezone STRING,
         |    station_id INT,
@@ -108,11 +107,11 @@ object AthenaManager {
     )
 
     stmt.execute(
-      """insert into sampledb.station_information
+      """insert into bdsf2001_manik.station_information
         | select b.system_id, b.timezone, cast(a.station_id as integer),
         | b.name, a.short_name, a.lat, a.lon, a.capacity
-        | from  sampledb.ext_station_information a
-        | cross join sampledb.ext_system_information b
+        | from  bdsf2001_manik.ext_station_information a
+        | cross join bdsf2001_manik.ext_system_information b
         | """.stripMargin)
 
     connection.close()

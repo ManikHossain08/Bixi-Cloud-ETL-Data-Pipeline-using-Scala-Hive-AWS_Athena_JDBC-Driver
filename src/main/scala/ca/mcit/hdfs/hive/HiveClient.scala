@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.hive
+package ca.mcit.hdfs.hive
 
 import org.apache.hive.jdbc.HiveDriver
 import java.sql.{Connection, DriverManager, Statement}
